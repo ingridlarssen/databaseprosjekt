@@ -20,10 +20,10 @@ public class MainProgram {
 			System.out.println("Skriv inn navn: ");
 			String navn = System.console().readLine();
 			System.out.println("Er øvelsen på et apparat? 'j' for ja, 'n' for nei ");
-			String øvelsePåApparat = System.console().readLine();
-			if (øvelsePåApparat.equals("j")) {
+			String ovelsePaApparat = System.console().readLine();
+			if (ovelsePaApparat.equals("j")) {
 				System.out.println("Skriv inn navn på øvelse: ");
-				String navnPåØvelse = System.console().readLine();
+				String navnPaOvelse = System.console().readLine();
 				
 				System.out.println("Skriv inn antall kg: ");
 				String antallKg = System.console().readLine();
@@ -34,10 +34,10 @@ public class MainProgram {
 				int sett = Integer.parseInt(antallSett);
 				
 				System.out.println("Navn på apparat: ");
-				String navnPåApparat = System.console().readLine();
+				String navnPaApparat = System.console().readLine();
 				//gjør om navnPåApparat til et apparat-objekt
 				
-				ØvelsePåApparat øvelse = new ØvelsePåApparat(navn,kg,sett,navnPåApparat);
+				ØvelsePåApparat ovelse = new ØvelsePåApparat(navn,kg,sett,navnPaApparat);
 			}
 			else {
 				System.out.println("Beskriv øvelsen: ");
