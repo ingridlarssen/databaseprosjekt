@@ -11,6 +11,7 @@ public class MainProgram {
 			System.out.println("Skriv inn navn: ");
 			String navn = System.console().readLine();
 			System.out.println("Skriv inn beskrivelse:");
+			System.out.println("hei");
 			String beskrivelse = System.console().readLine();
 			Apparat apparat = new Apparat(navn,beskrivelse);
 			apparat.leggTilApparat();
