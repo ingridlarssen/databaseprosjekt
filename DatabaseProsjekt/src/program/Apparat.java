@@ -1,14 +1,20 @@
 package program;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Apparat {
 	
 	private String navn;
 	private String beskrivelse;
-	private Apparat[] apparater;
+	public static List<Apparat> apparater = new ArrayList<>();
+	public static List<String> StringApparater = new ArrayList<>();
 	
-	
+	 public static void main(String[] args) {
+		Apparat app1 = new Apparat("Tredemølle", "til å løpe på");
+		Apparat app2 = new Apparat("Stang", "til å løfte");
+	 }
+	 
 	
 	public Apparat (String navn, String beskrivelse) {
 		this.navn = navn;
@@ -17,7 +23,18 @@ public class Apparat {
 	}
 	
 	public void addToList() {
-		apparater.append(this);
+		apparater.add(this);
+	}
+	
+	public List<String> getStringList() {
+		for (Apparat a: apparater) {
+			StringApparater.add(a.getNavn());
+		}
+		return StringApparater;
+	}
+	
+	public List<Apparat> getList() {
+		return apparater;
 	}
 	
 	public void leggTilApparat() {

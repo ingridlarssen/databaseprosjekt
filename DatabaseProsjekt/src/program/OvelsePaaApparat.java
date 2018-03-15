@@ -1,20 +1,20 @@
 package program;
 
-public class ØvelsePåApparat extends Øvelse{
+public class OvelsePaaApparat extends Ovelse {
 	
 	private int kg;
 	private int sett;
-	private String apparat;
+	private Apparat apparat;
 
-	public ØvelsePåApparat(String navn, int kg, int sett, String apparat) {
+	public OvelsePaaApparat(String navn, int kg, int sett, Apparat apparat) {
 		super(navn);
 		this.kg = kg;
 		this.sett = sett;
 		this.apparat = apparat;
 	}
 	
-	public void leggTilØvelsePåApparat() {
-		//legg til øvelse på apparat i databasen vår.
+	public void leggTilOvelsePaaApparat() {
+		//legg til ï¿½velse pï¿½ apparat i databasen vï¿½r.
 	}
 	
 
