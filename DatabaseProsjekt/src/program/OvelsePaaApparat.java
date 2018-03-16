@@ -9,8 +9,8 @@ public class OvelsePaaApparat extends Ovelse {
 	private int sett;
 	private Apparat apparat;
 
-	public OvelsePaaApparat(String navn, int kg, int sett, Apparat apparat) {
-		super(navn);
+	public OvelsePaaApparat(String navn, String type, int kg, int sett, Apparat apparat) {
+		super(navn, type);
 		this.kg = kg;
 		this.sett = sett;
 		this.apparat = apparat;
