@@ -16,11 +16,11 @@ public class OvelsePaaApparat extends Ovelse {
 		this.apparat = apparat;
 	}
 	
-	public static void leggTilOvelsePaaApparat(ConnectionEstablisher connection, OvelsePaaApparat ovelse) {
+	public static void leggTilOvelsePaaApparat(ConnectionEstablisher connection, OvelsePaaApparat ovelse) throws SQLException {
 		int maxID = getMaxOvelseID(connection);
 		try {
 			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Ovelse (Ovelse.OvelseID, Ovelse.Navn, Ovelse.Type) VALUES(?,?,?)");
-			prep.setLong(1, getMaxOvelseID(connection));
+			prep.setLong(1, maxID);
 			prep.setString(2, ovelse.getNavn());
 			prep.setString(3, ovelse.getType());
 			prep.executeUpdate();
@@ -29,14 +29,11 @@ public class OvelsePaaApparat extends Ovelse {
 			System.out.println("Kunne ikke legge til øvelse pga " + e);
 		}
 		try {
-			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO OvelsePaaApparat (OvelsePaaApparat., Treningsokt.Dato, Treningsokt.Tidspunkt, Treningsokt.Varighet, Treningsokt.PersonligForm, Treningsokt.Prestasjon, Treningsokt.Notat) VALUES(?,?,?,?,?,?,?)");
-			prep.setLong(1, getMaxOvelseID(connection));
-			prep.setDate(2, okt.getDato());
-			prep.setTime(3, okt.getTidspunkt());
-			prep.setLong(4, okt.getVarighetMinutter());
-			prep.setLong(5, okt.getForm());
-			prep.setLong(6, okt.getPrestasjon());
-			prep.setString(7, okt.getBeskrivelse());
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO OvelsePaaApparat (OvelsePaaApparat.OvelsesID, OvelsePaaApparat.AntallKg, OvelsePaaApparat.AntallSett, OvelsePaaApparat.ApparatNavn) VALUES(?,?,?,?)");
+			prep.setLong(1, maxID);
+			prep.setLong(2, ovelse.getKg());
+			prep.setLong(3, ovelse.getSett());
+			prep.setString(4, ovelse.apparat.getNavn());
 			prep.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -44,7 +41,6 @@ public class OvelsePaaApparat extends Ovelse {
 		}
 	}
 	
-
 	public int getKg() {
 		return kg;
 	}

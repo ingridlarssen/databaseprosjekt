@@ -1,5 +1,7 @@
 package program;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +39,33 @@ public class Apparat {
 		return apparater;
 	}
 	
-	public void leggTilApparat() {
-		//legg til apparat i databasen
+	public Apparat getApparat(ConnectionEstablisher connection, String apparatNavn) throws SQLException {
+		Apparat apparat = null;
+		try {
+			String sql = "SELECT * FROM Apparat WHERE Apparat.Navn = " + apparatNavn;
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()){
+				apparat = new Apparat(rs.getString(1), rs.getString(2));
+				return apparat;
+			}
+		}catch(SQLException m) {
+			m.printStackTrace();
+			throw new SQLException("Fillern!");
+		}
+		return apparat;
+	}
+	
+	public static void leggTilApparat(ConnectionEstablisher connection, Apparat app) {
+		try {
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Apparat (Apparat.Beskrivelse, Apparat.Navn) VALUES(?,?)");
+			prep.setString(1, app.getBeskrivelse());
+			prep.setString(2, app.getNavn());
+			prep.executeUpdate();
+		} catch (SQLException e){
+			e.printStackTrace();
+			System.out.println("Kunne ikke legge til apparat pga " + e);
+		}
 	}
 
 	public String getNavn() {

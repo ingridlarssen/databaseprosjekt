@@ -29,7 +29,7 @@ public class MainProgram {
 			System.out.println("Skriv inn beskrivelse: \n");
 			String beskrivelse = scanner.nextLine();
 			Apparat apparat = new Apparat(navn,beskrivelse);
-			apparat.leggTilApparat();
+			Apparat.leggTilApparat(connection, apparat);
 			System.out.println("Apparat lagt til i apparatlisten: \n" + apparat.getStringList());
 		}
 		if (input.equals("reg o")) {
