@@ -8,8 +8,9 @@ public class Ovelse {
 	private String navn;
 	private String type;
 	
-	public Ovelse (String navn) {
+	public Ovelse (String navn, String type) {
 		this.navn = navn;
+		this.type = type;
 	}
 
 	public String getNavn() {
