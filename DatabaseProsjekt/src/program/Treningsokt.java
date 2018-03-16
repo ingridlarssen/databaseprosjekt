@@ -22,12 +22,13 @@ public class Treningsokt {
 		
 		LocalDate testDate = LocalDate.of(1996, Month.MARCH, 29);
 		java.sql.Date d = java.sql.Date.valueOf(testDate);
-		Time time = new Time(16,15,15);
+		Time time = new Time(16,00,15);
 		
-		Treningsokt treningsokt = new Treningsokt(d, time, 30, 7, 8, "Knall økt");
+		Treningsokt treningsokt = new Treningsokt(d, time, 30, 7, 8, "Knallster WHOPPA økt");
 		ConnectionEstablisher connection = new ConnectionEstablisher();
 		Treningsokt.leggTilTreningsokt(connection, treningsokt);
 		
+		Treningsokt.hentNSistetreningsokter(connection, 4);
 	}*/
 	
 	public String toString() {
@@ -60,7 +61,6 @@ public class Treningsokt {
 		} 
 	}
 	
-	
 	public static void leggTilTreningsokt(ConnectionEstablisher connection, Treningsokt okt) {
 		try {
 			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Treningsokt (Treningsokt.TreningsoktID, Treningsokt.Dato, Treningsokt.Tidspunkt, Treningsokt.Varighet, Treningsokt.PersonligForm, Treningsokt.Prestasjon, Treningsokt.Notat) VALUES(?,?,?,?,?,?,?)");
@@ -75,6 +75,27 @@ public class Treningsokt {
 		} catch (SQLException e){
 			e.printStackTrace();
 			System.out.println("Kunne ikke legge til treningsøkt pga " + e);
+		}
+	}
+	
+	public static void hentNSistetreningsokter(ConnectionEstablisher connection, int n) {
+		String sql = "SELECT * FROM Treningsokt ORDER BY TreningsoktID desc LIMIT " + n;
+		try {
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				Date dato = rs.getDate(2);
+				Time tidspunkt = rs.getTime(3);
+				int varighet = rs.getInt(4);
+				int form = rs.getInt(5);
+				int prestasjon = rs.getInt(6);
+				String beskrivelse = rs.getString(7);
+				System.out.println("Treningsøkt \nDato: " + dato + ", Tidspunkt: " + tidspunkt + ", Varighet (min): " + varighet
+						+ ", Form: " + form + ", Prestasjon: " + prestasjon + ", Beskrivelse: " + beskrivelse);
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 
