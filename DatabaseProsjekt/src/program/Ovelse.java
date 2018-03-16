@@ -1,10 +1,10 @@
 package program;
 
-public class Øvelse {
+public class Ovelse {
 	
 	private String navn;
 	
-	public Øvelse (String navn) {
+	public Ovelse (String navn) {
 		this.navn = navn;
 	}
 
