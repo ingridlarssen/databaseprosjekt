@@ -83,6 +83,4 @@ public class Apparat {
 	public void setBeskrivelse(String beskrivelse) {
 		this.beskrivelse = beskrivelse;
 	}
-	
-
 }

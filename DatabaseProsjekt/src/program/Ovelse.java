@@ -29,6 +29,8 @@ public class Ovelse {
 		this.type = type;
 	}
 	
+	
+	
 	public static int getMaxOvelseID(ConnectionEstablisher connection) throws SQLException {
 		String sql = "SELECT OvelsesID, MAX(OvelsesID) FROM Ovelse GROUP BY OvelsesID";
 		try {

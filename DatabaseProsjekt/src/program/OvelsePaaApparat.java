@@ -64,9 +64,4 @@ public class OvelsePaaApparat extends Ovelse {
 	public void setApparat(Apparat apparat) {
 		this.apparat = apparat;
 	}
-	
-	
-	
-	
-
 }
