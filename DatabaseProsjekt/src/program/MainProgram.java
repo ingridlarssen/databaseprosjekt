@@ -8,8 +8,9 @@ import program.Apparat;
 
 public class MainProgram {
 	
-	public static void main (String [] args) {
+	public static void main (String [] args) throws ClassNotFoundException {
 	
+		ConnectionEstablisher connection = new ConnectionEstablisher();
 		java.sql.Date d = null;
 		System.out.println("Registrer apperat: skriv 'reg a'. \n"
 				+ "Registrer ovelse: skriv 'reg o' \n"
@@ -155,6 +156,8 @@ public class MainProgram {
 			Treningsokt to = new Treningsokt(d, time, IntVarighet, IntForm, IntPrestasjon, beskrivelse);
 			System.out.println(to);
 			System.out.println("Treningsøkt registsrert: ");
+			//legger til i database:
+			Treningsokt.leggTilTreningsokt(connection, to);
 			
 			}
 		}

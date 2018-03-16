@@ -17,6 +17,7 @@ public class Treningsokt {
 	private int prestasjon;
 	private String beskrivelse;
 	
+	/*
 	public static void main(String[] args) throws ClassNotFoundException {
 		
 		LocalDate testDate = LocalDate.of(1996, Month.MARCH, 29);
@@ -27,7 +28,7 @@ public class Treningsokt {
 		ConnectionEstablisher connection = new ConnectionEstablisher();
 		Treningsokt.leggTilTreningsokt(connection, treningsokt);
 		
-	}
+	}*/
 	
 	public String toString() {
 		return "Dato: " + dato + "Tidspunkt: " + tidspunkt;
