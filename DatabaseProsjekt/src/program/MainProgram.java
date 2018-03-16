@@ -9,14 +9,19 @@ import program.Apparat;
 public class MainProgram {
 	
 	public static void main (String [] args) throws ClassNotFoundException {
-	
+		
 		ConnectionEstablisher connection = new ConnectionEstablisher();
 		java.sql.Date d = null;
 		System.out.println("Registrer apperat: skriv 'reg a'. \n"
 				+ "Registrer ovelse: skriv 'reg o' \n"
-				+ "Registrer treningsokt: skriv 'reg t'");
+				+ "Registrer treningsokt: skriv 'reg t' \n"
+				+ "Hente ut n siste treningsøkter: skriv tallet på hvor mange av de siste du vil hente");
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
+		if(isInteger(input)) {
+			int n = Integer.parseInt(input);
+			Treningsokt.hentNSistetreningsokter(connection, n);
+		}
 		if (input.equals("reg a")) {
 			System.out.println("Skriv inn navn pÃ¥ apparat:");
 			System.out.println("        ");
