@@ -1,5 +1,7 @@
 package program;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Scanner;
 
 import program.Apparat;
@@ -8,6 +10,7 @@ public class MainProgram {
 	
 	public static void main (String [] args) {
 	
+		java.sql.Date d = null;
 		System.out.println("Registrer apperat: skriv 'reg a'. \n"
 				+ "Registrer ovelse: skriv 'reg o' \n"
 				+ "Registrer treningsokt: skriv 'reg t'");
@@ -62,20 +65,23 @@ public class MainProgram {
 			}
 		}
 		if (input.equals("reg t")) {
+			
+			Time time = null;
 			//Datosjekk av input
 			System.out.println("Skriv inn dato for treningsøkt (yyyy-mm-dd): ");
 			String treningsokt = scanner.nextLine();
-			Integer IntDato = 000000;
+			String StringDato = "yyyy-mm-dd";
 			if (treningsokt.length() != 10) {
 				System.out.println("Feil datoformat. Prøv igjen (yyyy-mm-dd): ");
 				treningsokt = scanner.nextLine();
 			}
+			/*
 			else if(!isInteger(treningsokt)) {
 				System.out.println("Feil datoformat. Prøv igjen (yyyy-mm-dd): ");
 				treningsokt = scanner.nextLine();
-			}
+			}*/
 			else {
-				IntDato = StringToInt(treningsokt);
+				d = java.sql.Date.valueOf(treningsokt);
 			}
 			
 			//Tidspunksjekk av input
@@ -92,6 +98,9 @@ public class MainProgram {
 			}
 			else {
 				IntTidspunkt = StringToInt(tidspunkt);
+				int hour = Integer.parseInt(Integer.toString(IntTidspunkt).substring(0, 2));
+				int minute = Integer.parseInt(Integer.toString(IntTidspunkt).substring(2, 4));
+				time = new Time(hour, minute, 00);
 			}
 			
 			//Varighet
@@ -143,8 +152,10 @@ public class MainProgram {
 			//Beskrivelse
 			System.out.println("Beskriv treningsøkten: ");
 			String beskrivelse = scanner.nextLine();
-			Treningsokt to = new Treningsokt(IntDato, IntTidspunkt, IntVarighet, IntForm, IntPrestasjon, beskrivelse);
+			Treningsokt to = new Treningsokt(d, time, IntVarighet, IntForm, IntPrestasjon, beskrivelse);
+			System.out.println(to);
 			System.out.println("Treningsøkt registsrert: ");
+			
 			}
 		}
 	//Treningsokt(int dato, int tidspunkt, int varighetMin, int form, int prestasjon, String beskrivelse)
@@ -165,6 +176,8 @@ public class MainProgram {
 			return false;
 		}
 	}
+	
+	
 	
 	/*Hjelpefunksjon - Sjekker om et tall er i et gitt intervall*/
 	public static boolean between(int i, int minValueInclusive, int maxValueInclusive) {

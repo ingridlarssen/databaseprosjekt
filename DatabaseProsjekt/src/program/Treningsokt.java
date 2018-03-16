@@ -1,27 +1,41 @@
 package program;
 
 import java.beans.Statement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class Treningsokt {
 	
-	private int dato;
-	private int tidspunkt;
+	private Date dato;
+	private Time tidspunkt;
 	private int varighetMin;
 	private int form;
 	private int prestasjon;
 	private String beskrivelse;
 	
 	public static void main(String[] args) throws ClassNotFoundException {
-		Treningsokt treningsokt = new Treningsokt(0304, 1305, 30, 7, 8, "Knall økt");
+		
+		LocalDate testDate = LocalDate.of(1996, Month.MARCH, 29);
+		java.sql.Date d = java.sql.Date.valueOf(testDate);
+		Time time = new Time(16,15,15);
+		
+		Treningsokt treningsokt = new Treningsokt(d, time, 30, 7, 8, "Knall økt");
 		ConnectionEstablisher connection = new ConnectionEstablisher();
 		Treningsokt.leggTilTreningsokt(connection, treningsokt);
+		
+	}
+	
+	public String toString() {
+		return "Dato: " + dato + "Tidspunkt: " + tidspunkt;
 	}
 
 	
-	public Treningsokt(int dato, int tidspunkt, int varighetMin, int form, int prestasjon, String beskrivelse) {
-		this.dato = dato;
+	public Treningsokt(Date d, Time tidspunkt, int varighetMin, int form, int prestasjon, String beskrivelse) {
+		this.dato = d;
 		this.tidspunkt = tidspunkt;
 		this.varighetMin = varighetMin;
 		this.form = form;
@@ -50,8 +64,8 @@ public class Treningsokt {
 		try {
 			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Treningsokt (Treningsokt.TreningsoktID, Treningsokt.Dato, Treningsokt.Tidspunkt, Treningsokt.Varighet, Treningsokt.PersonligForm, Treningsokt.Prestasjon, Treningsokt.Notat) VALUES(?,?,?,?,?,?,?)");
 			prep.setLong(1, getMaxTreningsoktID(connection));
-			prep.setLong(2, okt.getDato());
-			prep.setLong(3, okt.getTidspunkt());
+			prep.setDate(2, okt.getDato());
+			prep.setTime(3, okt.getTidspunkt());
 			prep.setLong(4, okt.getVarighetMinutter());
 			prep.setLong(5, okt.getForm());
 			prep.setLong(6, okt.getPrestasjon());
@@ -63,19 +77,19 @@ public class Treningsokt {
 		}
 	}
 
-	public int getDato() {
+	public Date getDato() {
 		return dato;
 	}
 
-	public void setDato(int dato) {
+	public void setDato(Date dato) {
 		this.dato = dato;
 	}
 
-	public int getTidspunkt() {
+	public Time getTidspunkt() {
 		return tidspunkt;
 	}
 
-	public void setTidspunkt(int tidspunkt) {
+	public void setTidspunkt(Time tidspunkt) {
 		this.tidspunkt = tidspunkt;
 	}
 
