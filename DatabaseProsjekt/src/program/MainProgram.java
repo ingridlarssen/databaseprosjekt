@@ -62,15 +62,15 @@ public class MainProgram {
 		}
 		if (input.equals("reg t")) {
 			//Datosjekk av input
-			System.out.println("Skriv inn dato for treningsøkt (ddmmyy): ");
+			System.out.println("Skriv inn dato for treningsøkt (yyyy-mm-dd): ");
 			String treningsokt = scanner.nextLine();
 			Integer IntDato = 000000;
-			if (treningsokt.length() != 6) {
-				System.out.println("Feil datoformat. Prøv igjen (ddmmyy): ");
+			if (treningsokt.length() != 10) {
+				System.out.println("Feil datoformat. Prøv igjen (yyyy-mm-dd): ");
 				treningsokt = scanner.nextLine();
 			}
 			else if(!isInteger(treningsokt)) {
-				System.out.println("Feil datoformat. Prøv igjen (ddmmyy): ");
+				System.out.println("Feil datoformat. Prøv igjen (yyyy-mm-dd): ");
 				treningsokt = scanner.nextLine();
 			}
 			else {
