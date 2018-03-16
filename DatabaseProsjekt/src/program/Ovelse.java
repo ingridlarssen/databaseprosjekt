@@ -29,7 +29,7 @@ public class Ovelse {
 	}
 	
 	public static int getMaxOvelseID(ConnectionEstablisher connection) throws SQLException {
-		String sql = "SELECT OvelseID, MAX(OvelseID) FROM Ovelse GROUP BY OvelseID";
+		String sql = "SELECT OvelsesID, MAX(OvelsesID) FROM Ovelse GROUP BY OvelsesID";
 		try {
 			int maxID = 0;
 			java.sql.Statement st = connection.myConnection.createStatement();
