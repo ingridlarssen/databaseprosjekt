@@ -13,6 +13,13 @@ public class Treningsokt {
 	private int prestasjon;
 	private String beskrivelse;
 	
+	public static void main(String[] args) throws ClassNotFoundException {
+		Treningsokt treningsokt = new Treningsokt(0304, 1305, 30, 7, 8, "Knall økt");
+		ConnectionEstablisher connection = new ConnectionEstablisher();
+		Treningsokt.leggTilTreningsokt(connection, treningsokt);
+	}
+
+	
 	public Treningsokt(int dato, int tidspunkt, int varighetMin, int form, int prestasjon, String beskrivelse) {
 		this.dato = dato;
 		this.tidspunkt = tidspunkt;

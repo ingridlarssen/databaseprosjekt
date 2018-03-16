@@ -7,6 +7,7 @@ import program.Apparat;
 public class MainProgram {
 	
 	public static void main (String [] args) {
+	
 		System.out.println("Registrer apperat: skriv 'reg a'. \n"
 				+ "Registrer ovelse: skriv 'reg o' \n"
 				+ "Registrer treningsokt: skriv 'reg t'");
@@ -146,7 +147,6 @@ public class MainProgram {
 			System.out.println("Treningsøkt registsrert: ");
 			}
 		}
-
 	//Treningsokt(int dato, int tidspunkt, int varighetMin, int form, int prestasjon, String beskrivelse)
 	
 	
@@ -175,6 +175,5 @@ public class MainProgram {
 	        return false;
 	    }
 	}
-
 
 }

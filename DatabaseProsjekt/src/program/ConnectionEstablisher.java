@@ -1,5 +1,6 @@
 package program;
 
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -11,11 +12,11 @@ public class ConnectionEstablisher {
 	public java.sql.Connection myConnection;
 	static int connectionCounter;
 	
-	public ConnectionEstablisher(){
+	public ConnectionEstablisher() throws ClassNotFoundException{
 		this.establishConnection();
 	}
 		
-	private void establishConnection() {
+	private void establishConnection() throws ClassNotFoundException {
 		try {
 			java.sql.Connection kobling = DriverManager.getConnection(dbName ,username, pw);
 			this.myConnection = kobling;
@@ -23,6 +24,7 @@ public class ConnectionEstablisher {
 			System.out.println("Established a new connection with connection number: " + connectionCounter);
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Could not connect due to: " + "\n" + e.getStackTrace());
 		}
 	}
