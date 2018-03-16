@@ -1,5 +1,7 @@
 package program;
 
+import java.beans.Statement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Treningsokt {
@@ -20,21 +22,37 @@ public class Treningsokt {
 		this.beskrivelse = beskrivelse;
 	}
 	
-	public void leggTilTreningsokt(ConnectionEstablisher connection, Treningsokt okt) {
+	public static int getMaxTreningsoktID(ConnectionEstablisher connection) throws SQLException {
+		String sql = "SELECT TreningsoktID, MAX(TreningsoktID) FROM Treningsokt GROUP BY TreningsoktID";
 		try {
-			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement(""
-					+ "INSERT INTO Treningsokt(okt.dato, okt.tidspunk, okt.varighetMin, bla)");
-			prep.setString(1, okt.getDato());
-			prep.setString(2, okt.getTidspunkt());
-			prep.setLong(3, dep.getTlf());
-			prep.setLong(4, dep.getBrukerTlf());
-			prep.setLong(5, dep.isPrimary());
-			prep.setLong(6, dep.isActive());
-			prep.setString(7, dep.getRelationType());
-			prep.setLong(8, dep.getNotificationType());
+			int maxID = 0;
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				maxID = rs.getInt(1);	
+			}		
+			return maxID + 1;
+		} catch(SQLException m) {
+			m.printStackTrace();
+			throw new SQLException("Fillern!");
+		} 
+	}
+	
+	
+	public static void leggTilTreningsokt(ConnectionEstablisher connection, Treningsokt okt) {
+		try {
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Treningsokt (Treningsokt.TreningsoktID, Treningsokt.Dato, Treningsokt.Tidspunkt, Treningsokt.Varighet, Treningsokt.PersonligForm, Treningsokt.Prestasjon, Treningsokt.Notat) VALUES(?,?,?,?,?,?,?)");
+			prep.setLong(1, getMaxTreningsoktID(connection));
+			prep.setLong(2, okt.getDato());
+			prep.setLong(3, okt.getTidspunkt());
+			prep.setLong(4, okt.getVarighetMinutter());
+			prep.setLong(5, okt.getForm());
+			prep.setLong(6, okt.getPrestasjon());
+			prep.setString(7, okt.getBeskrivelse());
 			prep.executeUpdate();
 		} catch (SQLException e){
-			System.out.println("Kunne ikke legge til treningsøkt");
+			e.printStackTrace();
+			System.out.println("Kunne ikke legge til treningsøkt pga " + e);
 		}
 	}
 
@@ -55,11 +73,11 @@ public class Treningsokt {
 	}
 
 	public int getVarighetMinutter() {
-		return varighetMinutter;
+		return varighetMin;
 	}
 
-	public void setVarighetMinutter(int varighetMinutter) {
-		this.varighetMinutter = varighetMinutter;
+	public void setVarighetMinutter(int varighetMin) {
+		this.varighetMin = varighetMin;
 	}
 
 	public int getForm() {
