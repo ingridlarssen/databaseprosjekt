@@ -1,5 +1,8 @@
 package program;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class OvelsePaaApparat extends Ovelse {
 	
 	private int kg;
@@ -13,8 +16,32 @@ public class OvelsePaaApparat extends Ovelse {
 		this.apparat = apparat;
 	}
 	
-	public void leggTilOvelsePaaApparat() {
-		//legg til ï¿½velse pï¿½ apparat i databasen vï¿½r.
+	public static void leggTilOvelsePaaApparat(ConnectionEstablisher connection, OvelsePaaApparat ovelse) {
+		int maxID = getMaxOvelseID(connection);
+		try {
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Ovelse (Ovelse.OvelseID, Ovelse.Navn, Ovelse.Type) VALUES(?,?,?)");
+			prep.setLong(1, getMaxOvelseID(connection));
+			prep.setString(2, ovelse.getNavn());
+			prep.setString(3, ovelse.getType());
+			prep.executeUpdate();
+		} catch (SQLException e){
+			e.printStackTrace();
+			System.out.println("Kunne ikke legge til øvelse pga " + e);
+		}
+		try {
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO OvelsePaaApparat (OvelsePaaApparat., Treningsokt.Dato, Treningsokt.Tidspunkt, Treningsokt.Varighet, Treningsokt.PersonligForm, Treningsokt.Prestasjon, Treningsokt.Notat) VALUES(?,?,?,?,?,?,?)");
+			prep.setLong(1, getMaxOvelseID(connection));
+			prep.setDate(2, okt.getDato());
+			prep.setTime(3, okt.getTidspunkt());
+			prep.setLong(4, okt.getVarighetMinutter());
+			prep.setLong(5, okt.getForm());
+			prep.setLong(6, okt.getPrestasjon());
+			prep.setString(7, okt.getBeskrivelse());
+			prep.executeUpdate();
+		} catch (SQLException e){
+			e.printStackTrace();
+			System.out.println("Kunne ikke legge til øvelse på apparat pga " + e);
+		}
 	}
 	
 

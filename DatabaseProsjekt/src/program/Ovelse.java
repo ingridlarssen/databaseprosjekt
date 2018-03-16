@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class Ovelse {
 	
 	private String navn;
+	private String type;
 	
 	public Ovelse (String navn) {
 		this.navn = navn;
@@ -17,6 +18,14 @@ public class Ovelse {
 
 	public void setNavn(String navn) {
 		this.navn = navn;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	public static int getMaxOvelseID(ConnectionEstablisher connection) throws SQLException {
