@@ -21,7 +21,7 @@ public class ConnectionEstablisher {
 			java.sql.Connection kobling = DriverManager.getConnection(dbName ,username, pw);
 			this.myConnection = kobling;
 			connectionCounter++;
-			System.out.println("Established a new connection with connection number: " + connectionCounter);
+			//System.out.println("Established a new connection with connection number: " + connectionCounter);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
