@@ -37,7 +37,7 @@ public class Ovelse {
 		}
 	}
 
-	public void getOvelseResultat(ConnectionEstablisher connection, String navn, Date date1, Date date2) {
+	public static void getOvelseResultat(ConnectionEstablisher connection, String navn, Date date1, Date date2) {
 		int OvelsesID = 0;
 		String sql1 = "SELECT MIN(OvelsesID) FROM Ovelse WHERE Navn = '" + navn + "'";
 		try {
@@ -66,9 +66,10 @@ public class Ovelse {
 		}
 		if(isFriovelse) {
 			String sql3 = "SELECT Friovelser.Beskrivelse, Treningsokt.Dato FROM "
-					+ "((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
+					+ "(((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
 					+ "INNER JOIN Friovelser ON OvelsePaaTreningsokt.OvelsesID = Friovelser.OvelsesID) "
-					+ "WHERE Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "';";
+					+ "INNER JOIN Ovelse ON Ovelse.OvelsesID = Friovelser.OvelsesID) "
+					+ "WHERE (Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "') AND Ovelse.Navn = '" + navn + "';";
 			try {
 				java.sql.Statement st = connection.myConnection.createStatement();
 				ResultSet rs = st.executeQuery(sql3);
@@ -82,9 +83,10 @@ public class Ovelse {
 			}
 		} else {
 			String sql4 = "SELECT OvelserPaaApparat.AntallKg, OvelserPaaApparat.AntallSett, Treningsokt.Dato FROM "
-					+ "((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
+					+ "(((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
+					+ "INNER JOIN Ovelse ON Ovelse.OvelsesID = OvelserPaaApparat.OvelsesID) "
 					+ "INNER JOIN OvelserPaaApparat ON OvelsePaaTreningsokt.OvelsesID = OvelserPaaApparat.OvelsesID) "
-					+ "WHERE Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "';";
+					+ "WHERE (Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "') AND Ovelse.Navn = '" + navn + "';";
 			try {
 				java.sql.Statement st = connection.myConnection.createStatement();
 				ResultSet rs = st.executeQuery(sql4);

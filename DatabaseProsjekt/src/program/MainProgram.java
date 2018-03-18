@@ -209,8 +209,7 @@ public class MainProgram {
 			String sluttDato = scanner.nextLine();
 			Date start = java.sql.Date.valueOf(startDato);
 			Date slutt = java.sql.Date.valueOf(sluttDato);
-			
-			
+			Ovelse.getOvelseResultat(connection, navn, start, slutt);
 		}
 		
 		
