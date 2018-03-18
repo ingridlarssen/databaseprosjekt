@@ -66,7 +66,6 @@ public class Ovelse {
 		} return 1;
 	}
 	
-	//finner ID på økt som skal bli lagt til
 	public static int getMaxOvelseID(ConnectionEstablisher connection) throws SQLException {
 		String sql = "SELECT OvelsesID, MAX(OvelsesID) FROM Ovelse GROUP BY OvelsesID";
 		try {
