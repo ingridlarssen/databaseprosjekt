@@ -8,14 +8,31 @@ public class Ovelse {
 	private String navn;
 	private String type;
 	
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		ConnectionEstablisher connection = new ConnectionEstablisher();
-		finnOvelserISammeGruppe(connection, "Trene");
+		hentTop5ovelser(connection);
 	}
 	
 	public Ovelse (String navn, String type) {
 		this.navn = navn;
 		this.type = type;
+	}
+	
+	public static void hentTop5ovelser(ConnectionEstablisher connection) throws SQLException {
+		try {
+			String sql = "SELECT Navn FROM Ovelse GROUP BY Navn ORDER BY COUNT(*) DESC LIMIT 5";
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			System.out.println("Her er de mest gjennomførte øvelsene i synkende rekkefølge: \n");
+			while(rs.next()) {
+				String navn = rs.getString(1);
+				System.out.println(navn);	
+			}
+		}
+		catch(SQLException m){
+			m.printStackTrace();
+			throw new SQLException("Kunne ikke hente Top 5");
+		}
 	}
 	
 	public static void finnOvelserISammeGruppe(ConnectionEstablisher connection, String ovelsesType) {
