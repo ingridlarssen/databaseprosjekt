@@ -39,10 +39,10 @@ public class Apparat {
 		return apparater;
 	}
 	
-	public Apparat getApparat(ConnectionEstablisher connection, String apparatNavn) throws SQLException {
+	public static Apparat getApparat(ConnectionEstablisher connection, String apparatNavn) throws SQLException {
 		Apparat apparat = null;
 		try {
-			String sql = "SELECT * FROM Apparat WHERE Apparat.Navn = " + apparatNavn;
+			String sql = "SELECT * FROM Apparat WHERE Apparat.Navn = '" + apparatNavn + "'";
 			java.sql.Statement st = connection.myConnection.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()){
