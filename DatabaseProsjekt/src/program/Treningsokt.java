@@ -31,7 +31,7 @@ public class Treningsokt {
 	}
 	
 	public String toString() {
-		return "Dato: " + dato + "Tidspunkt: " + tidspunkt;
+		return "Dato: " + dato + " Tidspunkt: " + tidspunkt;
 	}
 
 	
