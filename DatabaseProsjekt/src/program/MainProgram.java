@@ -19,7 +19,8 @@ public class MainProgram {
 				+ "Vil du se resultatlogg i gitt tidspunkt? Skriv 'resultatlogg' \n"
 				+ "Vil du se øvelser som tilhører samme gruppe? Skriv 'gruppe' \n"
 				+ "Vil du legge til en ny øvelsestype? Skriv 'ny gruppe'"
-				+ "Vil du se resulater for en spesifikk øvelse i et gitt tidsintervall? Skriv 'resultatlogg'");
+				+ "Vil du se resulater for en spesifikk øvelse i et gitt tidsintervall? Skriv 'resultatlogg' \n"
+				+ "Vil du de 5 øvelsene som er gjort flest ganger? Skriv 'topp 5'");
 		
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
@@ -214,6 +215,9 @@ public class MainProgram {
 		
 		
 		//TODO: VALGFRI USERCASE
+		if (input.equals("topp 5")) {
+			Ovelse.hentTop5ovelser(connection);
+		}
 		
 		
 		
