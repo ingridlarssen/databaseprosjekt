@@ -1,7 +1,9 @@
 package program;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Ovelse {
 	
@@ -32,6 +34,68 @@ public class Ovelse {
 		catch(SQLException m){
 			m.printStackTrace();
 			throw new SQLException("Kunne ikke hente Top 5");
+		}
+	}
+
+	public void getOvelseResultat(ConnectionEstablisher connection, String navn, Date date1, Date date2) {
+		int OvelsesID = 0;
+		String sql1 = "SELECT MIN(OvelsesID) FROM Ovelse WHERE Navn = '" + navn + "'";
+		try {
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql1);
+			while(rs.next()) {
+				OvelsesID = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println("Fant ikke ovelse med navn: " + navn + " pga. "+ e);
+			e.printStackTrace();
+		}
+		boolean isFriovelse = true;
+		String sql2 = "SELECT Count(1) as record_count FROM Friovelser WHERE OvelsesID = " + OvelsesID;
+		try {
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql2);
+			while(rs.next()) {
+				if (rs.getInt(1) == 0) {
+					isFriovelse = false;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("Fant ikke ovelse med navn: " + navn + " pga. "+ e);
+			e.printStackTrace();
+		}
+		if(isFriovelse) {
+			String sql3 = "SELECT Friovelser.Beskrivelse, Treningsokt.Dato FROM "
+					+ "((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
+					+ "INNER JOIN Friovelser ON OvelsePaaTreningsokt.OvelsesID = Friovelser.OvelsesID) "
+					+ "WHERE Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "';";
+			try {
+				java.sql.Statement st = connection.myConnection.createStatement();
+				ResultSet rs = st.executeQuery(sql3);
+				System.out.println("Resultatlogg for ovelse: " + navn);
+				while(rs.next()) {
+					System.out.println("Dato: " + rs.getString(2) + " Beskrivelse: " + rs.getString(1));
+				}
+			} catch (SQLException e) {
+				System.out.println("Fant ikke ovelse med navn: " + navn + " pga. "+ e);
+				e.printStackTrace();
+			}
+		} else {
+			String sql4 = "SELECT OvelserPaaApparat.AntallKg, OvelserPaaApparat.AntallSett, Treningsokt.Dato FROM "
+					+ "((Treningsokt INNER JOIN OvelsePaaTreningsokt ON Treningsokt.TreningsoktID = OvelsePaaTreningsokt.TreningsoktID) "
+					+ "INNER JOIN OvelserPaaApparat ON OvelsePaaTreningsokt.OvelsesID = OvelserPaaApparat.OvelsesID) "
+					+ "WHERE Treningsokt.Dato BETWEEN '" + date1 + "' AND '" + date2 + "';";
+			try {
+				java.sql.Statement st = connection.myConnection.createStatement();
+				ResultSet rs = st.executeQuery(sql4);
+				System.out.println("Resultatlogg for ovelse: " + navn);
+				while(rs.next()) {
+					System.out.println("Dato: " + rs.getString(3) + " Antall Kg: " + rs.getString(1) + " Antall Sett: " + rs.getString(2));
+				}
+			} catch (SQLException e) {
+				System.out.println("Fant ikke ovelse med navn: " + navn + " pga. "+ e);
+				e.printStackTrace();
+			}
 		}
 	}
 	
