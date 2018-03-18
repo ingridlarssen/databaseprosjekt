@@ -17,19 +17,18 @@ public class Treningsokt {
 	private int prestasjon;
 	private String beskrivelse;
 	
-	/*
+	
 	public static void main(String[] args) throws ClassNotFoundException {
 		
 		LocalDate testDate = LocalDate.of(1996, Month.MARCH, 29);
 		java.sql.Date d = java.sql.Date.valueOf(testDate);
 		Time time = new Time(16,00,15);
 		
-		Treningsokt treningsokt = new Treningsokt(d, time, 30, 7, 8, "Knallster WHOPPA økt");
+		Treningsokt treningsokt = new Treningsokt(d, time, 30, 7, 8, "Denne vil jeg finne ID på");
 		ConnectionEstablisher connection = new ConnectionEstablisher();
 		Treningsokt.leggTilTreningsokt(connection, treningsokt);
 		
-		Treningsokt.hentNSistetreningsokter(connection, 4);
-	}*/
+	}
 	
 	public String toString() {
 		return "Dato: " + dato + "Tidspunkt: " + tidspunkt;
@@ -43,6 +42,22 @@ public class Treningsokt {
 		this.form = form;
 		this.prestasjon = prestasjon;
 		this.beskrivelse = beskrivelse;
+	}
+	
+	
+	public static int hentTreningsoktID(ConnectionEstablisher connection) {
+		String sql = "SELECT TreningsoktID, MAX(TreningsoktID) FROM Treningsokt GROUP BY TreningsoktID";
+		try {
+			int ID = 0;
+			java.sql.Statement st = connection.myConnection.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				ID = rs.getInt(1);
+			} return ID;
+		} catch (SQLException e) {
+			System.out.println("fikk ikke til å hente siste ID");
+			e.printStackTrace();
+		} return 1;
 	}
 	
 	public static int getMaxTreningsoktID(ConnectionEstablisher connection) throws SQLException {

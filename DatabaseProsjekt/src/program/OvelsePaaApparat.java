@@ -7,19 +7,19 @@ public class OvelsePaaApparat extends Ovelse {
 	
 	private int kg;
 	private int sett;
-	private Apparat apparat;
+	private String apparatNavn;
 
-	public OvelsePaaApparat(String navn, String type, int kg, int sett, Apparat apparat) {
+	public OvelsePaaApparat(String navn, String type, int kg, int sett, String apparatNavn) {
 		super(navn, type);
 		this.kg = kg;
 		this.sett = sett;
-		this.apparat = apparat;
+		this.apparatNavn = apparatNavn;
 	}
 	
 	public static void leggTilOvelsePaaApparat(ConnectionEstablisher connection, OvelsePaaApparat ovelse) throws SQLException {
 		int maxID = getMaxOvelseID(connection);
 		try {
-			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Ovelse (Ovelse.OvelseID, Ovelse.Navn, Ovelse.Type) VALUES(?,?,?)");
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Ovelse (Ovelse.OvelsesID, Ovelse.Navn, Ovelse.Type) VALUES(?,?,?)");
 			prep.setLong(1, maxID);
 			prep.setString(2, ovelse.getNavn());
 			prep.setString(3, ovelse.getType());
@@ -29,11 +29,11 @@ public class OvelsePaaApparat extends Ovelse {
 			System.out.println("Kunne ikke legge til øvelse pga " + e);
 		}
 		try {
-			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO OvelsePaaApparat (OvelsePaaApparat.OvelsesID, OvelsePaaApparat.AntallKg, OvelsePaaApparat.AntallSett, OvelsePaaApparat.ApparatNavn) VALUES(?,?,?,?)");
+			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO OvelserPaaApparat (OvelserPaaApparat.OvelsesID, OvelserPaaApparat.AntallKg, OvelserPaaApparat.AntallSett, OvelserPaaApparat.ApparatNavn) VALUES(?,?,?,?)");
 			prep.setLong(1, maxID);
 			prep.setLong(2, ovelse.getKg());
 			prep.setLong(3, ovelse.getSett());
-			prep.setString(4, ovelse.apparat.getNavn());
+			prep.setString(4, ovelse.apparatNavn);
 			prep.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -57,16 +57,13 @@ public class OvelsePaaApparat extends Ovelse {
 		this.sett = sett;
 	}
 
-	public Apparat getApparat() {
-		return apparat;
+	public String getApparat() {
+		return apparatNavn;
 	}
 
-	public void setApparat(Apparat apparat) {
-		this.apparat = apparat;
+	public void setApparat(String apparatNavn) {
+		this.apparatNavn = apparatNavn;
 	}
-	
-	
-	
 	
 
 }
