@@ -7,24 +7,21 @@ public class Friovelse extends Ovelse {
 	
 	private String beskrivelse;
 	
-	public Friovelse(String navn, String type, String beskrivelse) {
-		super(navn, type);
+	public static void main(String[] args) throws ClassNotFoundException {
+		ConnectionEstablisher connection = new ConnectionEstablisher();
+		Friovelse friovelse = new Friovelse("Planke", "Hardt!!!!!");
+		leggTilFriovelse(connection,friovelse);
+	}
+	
+
+	public Friovelse(String navn, String beskrivelse) {
+		super(navn);
 		this.beskrivelse = beskrivelse;
 	}
 	
-	public static void leggTilFriovelse(ConnectionEstablisher connection, Friovelse friovelse) throws SQLException {
-		int maxID = getMaxOvelseID(connection);
+	public static void leggTilFriovelse(ConnectionEstablisher connection, Friovelse friovelse) {
 		try {
-			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Ovelse (Ovelse.OvelsesID, Ovelse.Navn, Ovelse.Type) VALUES(?,?,?)");
-			prep.setLong(1, maxID);
-			prep.setString(2, friovelse.getNavn());
-			prep.setString(3, friovelse.getType());
-			prep.executeUpdate();
-		} catch (SQLException e){
-			e.printStackTrace();
-			System.out.println("Kunne ikke legge til øvelse pga " + e);
-		}
-		try {
+			int maxID = getMaxOvelseID(connection);
 			java.sql.PreparedStatement prep = connection.myConnection.prepareStatement("INSERT INTO Friovelser (Friovelser.OvelsesID, Friovelser.Beskrivelse) VALUES(?,?)");
 			prep.setLong(1, maxID);
 			prep.setString(2, friovelse.getBeskrivelse());
